@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/registration_Fragment">
+
+    <fragment
+        android:id="@+id/registration_Fragment"
+        android:name="com.hassan.fypuidesign.Registration_Fragment"
+        android:label="fragment_registration_"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registration_Fragment_to_languageSelectionFragment"
+            app:destination="@id/languageSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/languageSelectionFragment"
+        android:name="com.hassan.fypuidesign.LanguageSelectionFragment"
+        android:label="fragment_language_selection"
+        tools:layout="@layout/fragment_language_selection" >
+        <action
+            android:id="@+id/action_languageSelectionFragment_to_literacyLevelSelection"
+            app:destination="@id/literacyLevelSelection" />
+    </fragment>
+    <fragment
+        android:id="@+id/learningMode"
+        android:name="com.hassan.fypuidesign.LearningMode"
+        android:label="fragment_learning_mode"
+        tools:layout="@layout/fragment_learning_mode" >
+        <action
+            android:id="@+id/action_learningMode_to_lectures"
+            app:destination="@id/lectures" />
+        <action
+            android:id="@+id/action_learningMode_to_subjects"
+            app:destination="@id/subjects"
+            app:popUpTo="@id/subjects" />
+    </fragment>
+    <fragment
+        android:id="@+id/lectures"
+        android:name="com.hassan.fypuidesign.lectures"
+        android:label="fragment_lectures"
+        tools:layout="@layout/fragment_lectures" >
+        <action
+            android:id="@+id/action_lectures_to_learningMode"
+            app:destination="@id/learningMode"
+            app:popUpTo="@id/learningMode" />
+    </fragment>
+    <fragment
+        android:id="@+id/subjects"
+        android:name="com.hassan.fypuidesign.Subjects"
+        android:label="fragment_subjects"
+        tools:layout="@layout/fragment_subjects" >
+        <action
+            android:id="@+id/action_subjects_to_learningMode"
+            app:destination="@id/learningMode" />
+        <action
+            android:id="@+id/action_subjects_to_literacyLevelSelection"
+            app:destination="@id/literacyLevelSelection"
+            app:popUpTo="@id/literacyLevelSelection" />
+    </fragment>
+    <fragment
+        android:id="@+id/literacyLevelSelection"
+        android:name="com.hassan.fypuidesign.literacyLevelSelection"
+        android:label="fragment_literacy_level_selection"
+        tools:layout="@layout/fragment_literacy_level_selection" >
+        <action
+            android:id="@+id/action_literacyLevelSelection_to_subjects"
+            app:destination="@id/subjects" />
+        <action
+            android:id="@+id/action_literacyLevelSelection_to_languageSelectionFragment"
+            app:destination="@id/languageSelectionFragment"
+            app:popUpTo="@id/languageSelectionFragment" />
+    </fragment>
+</navigation>

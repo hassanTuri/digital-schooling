@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LanguageSelectionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/arrow"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="409dp"
+            android:layout_height="659dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5">
+
+            <ImageView
+                android:id="@+id/pushto"
+                android:layout_width="241dp"
+                android:layout_height="153dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="35dp"
+                android:padding="20dp"
+                android:background="@drawable/border"
+                android:layout_marginBottom="50dp"
+                android:src="@drawable/iconp"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/urduL"
+                android:layout_width="241dp"
+                android:layout_height="153dp"
+                android:background="@drawable/border"
+                android:padding="15dp"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/iconu" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/speaker" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

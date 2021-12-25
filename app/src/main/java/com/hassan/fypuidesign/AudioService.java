@@ -8,4 +8,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 public class AudioService{
+ public void audioStoporPlay(MediaPlayer mediaPlayer){
+
+ }
 }

@@ -93,6 +93,27 @@ public class lectures extends Fragment {
         }
         NavController navController = Navigation.findNavController(view);
         ImageView backarrow = view.findViewById(R.id.backarrow);
+        ImageView audioLectures = view.findViewById(R.id.audioLectures);
+        audioLectures.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mediaPlayer!=null){
+                    mediaPlayer.release();
+                    audioLectures.setImageResource(R.drawable.mutedaudio);
+                }
+                else {
+                    if(LanguageForLectures=="UrduL") {
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.lecturesurdu);
+                    }
+                    else{
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.lecturespushto);
+                    }
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    audioLectures.setImageResource(R.drawable.speaker);
+                }
+            }
+        });
 
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override

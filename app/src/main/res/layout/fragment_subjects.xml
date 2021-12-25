@@ -67,7 +67,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/audioSubjectSelection"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center|center_horizontal|center_vertical"

@@ -1,4 +1,5 @@
 package com.hassan.fypuidesign;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -77,6 +78,23 @@ public class LanguageSelectionFragment extends Fragment{
         NavController navController = Navigation.findNavController(view);
         ImageView urduL = view.findViewById(R.id.urduL);
         ImageView pashto = view.findViewById(R.id.pushto);
+        ImageView LanguageSelectionAudio=view.findViewById(R.id.languageselectionaudioimage);
+        LanguageSelectionAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mediaPlayer!=null){
+                    mediaPlayer.release();
+                    mediaPlayer=null;
+                    LanguageSelectionAudio.setImageResource(R.drawable.mutedaudio);
+                }
+                else {
+                   mediaPlayer=MediaPlayer.create(getActivity(),R.raw.language_selection_audio);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    LanguageSelectionAudio.setImageResource(R.drawable.speaker);
+                }
+            }
+        });
 
         if(mediaPlayer==null){
             mediaPlayer=MediaPlayer.create(getActivity(),R.raw.language_selection_audio);

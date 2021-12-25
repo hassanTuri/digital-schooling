@@ -60,12 +60,13 @@
                 android:src="@drawable/iconu" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/languageselectionaudioimage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center|center_horizontal|center_vertical"
                 android:layout_marginTop="70dp"
                 android:src="@drawable/speaker" />
+
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

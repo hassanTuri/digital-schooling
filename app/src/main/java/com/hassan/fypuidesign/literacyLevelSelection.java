@@ -80,6 +80,7 @@ public class literacyLevelSelection extends Fragment {
         ImageView back_lang=view.findViewById(R.id.back_lang);
         ImageView semiliterate=view.findViewById(R.id.semiliterate);
         ImageView full_illiterate=view.findViewById(R.id.full_illiterate);
+        ImageView audioLiteracyLevel=view.findViewById(R.id.audioLiteracyLevel);
         if(LanguageSelect!=null) {
             LanguageSel = LanguageSelect;
 
@@ -124,7 +125,27 @@ public class literacyLevelSelection extends Fragment {
             }
 
         }
-
+        audioLiteracyLevel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mediaPlayer!=null){
+                    mediaPlayer.release();
+                    mediaPlayer=null;
+                    audioLiteracyLevel.setImageResource(R.drawable.mutedaudio);
+                }
+                else {
+                    if(LanguageSel=="UrduL") {
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.illiteracylevelselectionurdu);
+                    }
+                    else{
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.illetracylevelselectionpushto);
+                    }
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    audioLiteracyLevel.setImageResource(R.drawable.speaker);
+                }
+            }
+        });
         back_lang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

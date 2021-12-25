@@ -94,6 +94,7 @@ public class LearningMode extends Fragment {
         ImageView writing = view.findViewById(R.id.writing);
         ImageView reading = view.findViewById(R.id.reading);
         ImageView back_subjects = view.findViewById(R.id.back_subjects);
+        ImageView audioForLearningMode = view.findViewById(R.id.speakerVoice);
 
         back_subjects.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +105,27 @@ public class LearningMode extends Fragment {
                 mediaPlayer.release();
             }
         });
-
+        audioForLearningMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mediaPlayer!=null){
+                    mediaPlayer.release();
+                    mediaPlayer=null;
+                   audioForLearningMode.setImageResource(R.drawable.mutedaudio);
+                }
+                else {
+                    if(LanguageForLearningMode=="UrduL") {
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectsmodulesurdu);
+                    }
+                    else{
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectmodulespushto);
+                    }
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    audioForLearningMode.setImageResource(R.drawable.speaker);
+                }
+            }
+        });
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

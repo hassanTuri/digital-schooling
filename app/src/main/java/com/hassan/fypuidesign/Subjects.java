@@ -81,6 +81,7 @@ public class Subjects extends Fragment {
         ImageView urduS = view.findViewById(R.id.urduS);
         ImageView mathsS = view.findViewById(R.id.mathsS);
         ImageView back_language = view.findViewById(R.id.back_language);
+        ImageView audioSubjectSelection = view.findViewById(R.id.audioSubjectSelection);
         if (LanguageSe!=null) {
             LanguageFromSubOrLit=LanguageSe;
             if (LanguageSe == "UrduL") {
@@ -115,6 +116,26 @@ public class Subjects extends Fragment {
 
         }
 
+        audioSubjectSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mediaPlayer!=null){
+                    mediaPlayer.release();
+                    audioSubjectSelection.setImageResource(R.drawable.mutedaudio);
+                }
+                else {
+                    if(LanguageSe=="UrduL") {
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionurdu);
+                    }
+                    else{
+                        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionpushto);
+                    }
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    audioSubjectSelection.setImageResource(R.drawable.speaker);
+                }
+            }
+        });
 
 
         back_language.setOnClickListener(new View.OnClickListener() {

@@ -35,6 +35,12 @@
             android:id="@+id/action_learningMode_to_subjects"
             app:destination="@id/subjects"
             app:popUpTo="@id/subjects" />
+        <argument
+            android:name="LanguageForLearningMode"
+            app:argType="string" />
+        <argument
+            android:name="SubjectChoosen"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/lectures"
@@ -45,6 +51,13 @@
             android:id="@+id/action_lectures_to_learningMode"
             app:destination="@id/learningMode"
             app:popUpTo="@id/learningMode" />
+        <argument
+            android:name="SubjectLectures"
+            app:argType="string" />
+        <argument
+            android:name="LanguageForLectures"
+            app:argType="string" />
+        <argument android:name="ModeOfLearning" />
     </fragment>
     <fragment
         android:id="@+id/subjects"
@@ -58,6 +71,12 @@
             android:id="@+id/action_subjects_to_literacyLevelSelection"
             app:destination="@id/literacyLevelSelection"
             app:popUpTo="@id/literacyLevelSelection" />
+        <argument
+            android:name="LanguageSelectedSubject"
+            app:argType="string" />
+        <argument
+            android:name="LiteracyLevel"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/literacyLevelSelection"
@@ -71,5 +90,8 @@
             android:id="@+id/action_literacyLevelSelection_to_languageSelectionFragment"
             app:destination="@id/languageSelectionFragment"
             app:popUpTo="@id/languageSelectionFragment" />
+        <argument
+            android:name="languageselection"
+            app:argType="string" />
     </fragment>
 </navigation>

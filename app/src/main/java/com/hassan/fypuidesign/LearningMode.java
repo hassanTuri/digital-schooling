@@ -1,11 +1,13 @@
 package com.hassan.fypuidesign;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
@@ -20,7 +22,7 @@ import android.widget.ImageView;
  * create an instance of this fragment.
  */
 public class LearningMode extends Fragment {
-
+        MediaPlayer mediaPlayer;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,6 +72,23 @@ public class LearningMode extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        String LanguageForLearningMode=LearningModeArgs.fromBundle(getArguments()).getLanguageForLearningMode();
+        String Subjects=LearningModeArgs.fromBundle(getArguments()).getSubjectChoosen();
+       // String LanguageBackLect=LearningModeArgs.fromBundle(getArguments()).getLanguageForLearningMode();
+        if (LanguageForLearningMode=="UrduL"){
+            if (mediaPlayer==null)
+            mediaPlayer=MediaPlayer.create(getActivity(),R.raw.subjectsmodulesurdu);
+            else
+                mediaPlayer.release();
+            mediaPlayer.start();
+        }
+        else {
+            if (mediaPlayer==null)
+            mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectmodulespushto);
+            else
+                mediaPlayer.release();
+            mediaPlayer.start();
+        }
 
         NavController navController = Navigation.findNavController(view);
         ImageView writing = view.findViewById(R.id.writing);
@@ -79,21 +98,27 @@ public class LearningMode extends Fragment {
         back_subjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NavDirections action=LearningModeDirections.actionLearningModeToSubjects(LanguageForLearningMode,Subjects);
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.subjects,true).build();
-                navController.navigate(R.id.action_learningMode_to_subjects,null,navOptions);
+                navController.navigate(action,navOptions);
+                mediaPlayer.release();
             }
         });
 
         writing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_learningMode_to_lectures);
+                NavDirections action=LearningModeDirections.actionLearningModeToLectures(Subjects,LanguageForLearningMode,"Writting");
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
         reading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_learningMode_to_lectures);
+                NavDirections action=LearningModeDirections.actionLearningModeToLectures(Subjects,LanguageForLearningMode,"Reading");
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
     }

@@ -1,11 +1,13 @@
 package com.hassan.fypuidesign;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
@@ -20,7 +22,8 @@ import android.widget.ImageView;
  * create an instance of this fragment.
  */
 public class Subjects extends Fragment {
-
+        MediaPlayer mediaPlayer;
+        String LanguageFromSubOrLit;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,37 +73,82 @@ public class Subjects extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        String LanguageSe=SubjectsArgs.fromBundle(getArguments()).getLanguageSelectedSubject();
+        String Illiteracy=SubjectsArgs.fromBundle(getArguments()).getLiteracyLevel();
+        String LanguageBackFromLearningMode=SubjectsArgs.fromBundle(getArguments()).getLanguageSelectedSubject();
         NavController navController = Navigation.findNavController(view);
         ImageView englishS = view.findViewById(R.id.englishS);
         ImageView urduS = view.findViewById(R.id.urduS);
         ImageView mathsS = view.findViewById(R.id.mathsS);
         ImageView back_language = view.findViewById(R.id.back_language);
+        if (LanguageSe!=null) {
+            LanguageFromSubOrLit=LanguageSe;
+            if (LanguageSe == "UrduL") {
+                if (mediaPlayer == null)
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionurdu);
+                else
+                    mediaPlayer.release();
+                mediaPlayer.start();
+            } else {
+                if (mediaPlayer == null)
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionpushto);
+                else
+                    mediaPlayer.release();
+                mediaPlayer.start();
+            }
+        }
+        else {
+            LanguageFromSubOrLit=LanguageBackFromLearningMode;
+            if (LanguageBackFromLearningMode == "UrduL") {
+                if (mediaPlayer == null)
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionurdu);
+                else
+                    mediaPlayer.release();
+                mediaPlayer.start();
+            } else {
+                if (mediaPlayer == null)
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionpushto);
+                else
+                    mediaPlayer.release();
+                mediaPlayer.start();
+            }
+
+        }
+
+
 
         back_language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               NavDirections action=SubjectsDirections.actionSubjectsToLiteracyLevelSelection(LanguageFromSubOrLit);
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.literacyLevelSelection,true).build();
-                navController.navigate(R.id.action_subjects_to_literacyLevelSelection,null,navOptions);
+                navController.navigate(action,navOptions);
+                mediaPlayer.release();
             }
         });
 
         englishS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_subjects_to_learningMode);
+                NavDirections action=SubjectsDirections.actionSubjectsToLearningMode(LanguageFromSubOrLit,"EnglishS");
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
         urduS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_subjects_to_learningMode);
+                NavDirections action=SubjectsDirections.actionSubjectsToLearningMode(LanguageFromSubOrLit,"UrduS");
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
         mathsS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_subjects_to_learningMode);
+                NavDirections action=SubjectsDirections.actionSubjectsToLearningMode(LanguageFromSubOrLit,"MathsS");
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
     }

@@ -1,25 +1,29 @@
 package com.hassan.fypuidesign;
-
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LanguageSelectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LanguageSelectionFragment extends Fragment {
+public class LanguageSelectionFragment extends Fragment{
 
+    MediaPlayer mediaPlayer;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,6 +62,7 @@ public class LanguageSelectionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -69,22 +74,40 @@ public class LanguageSelectionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         NavController navController = Navigation.findNavController(view);
         ImageView urduL = view.findViewById(R.id.urduL);
         ImageView pashto = view.findViewById(R.id.pushto);
 
+        if(mediaPlayer==null){
+            mediaPlayer=MediaPlayer.create(getActivity(),R.raw.language_selection_audio);
+            mediaPlayer.start();
+            mediaPlayer.setLooping(true);
+        }
+        else {
+            mediaPlayer.release();
+        }
+
+
         urduL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_languageSelectionFragment_to_literacyLevelSelection);
+
+                NavDirections action=LanguageSelectionFragmentDirections.actionLanguageSelectionFragmentToLiteracyLevelSelection("UrduL");
+                navController.navigate(action);
+
+                mediaPlayer.release();
             }
         });
         pashto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_languageSelectionFragment_to_literacyLevelSelection);
+
+                NavDirections action=LanguageSelectionFragmentDirections.actionLanguageSelectionFragmentToLiteracyLevelSelection("PashtoL");
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
+
+
     }
 }

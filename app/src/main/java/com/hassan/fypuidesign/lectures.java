@@ -1,11 +1,13 @@
 package com.hassan.fypuidesign;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
@@ -20,7 +22,7 @@ import android.widget.ImageView;
  * create an instance of this fragment.
  */
 public class lectures extends Fragment {
-
+    MediaPlayer mediaPlayer;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,15 +72,35 @@ public class lectures extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        String LanguageForLectures=lecturesArgs.fromBundle(getArguments()).getLanguageForLectures();
+        String SubjectsForLectures=lecturesArgs.fromBundle(getArguments()).getSubjectLectures();
+        String ModeOfLearning=lecturesArgs.fromBundle(getArguments()).getModeOfLearning();
+        if (LanguageForLectures=="UrduL"){
+            if (mediaPlayer==null){
+                mediaPlayer=MediaPlayer.create(getActivity(),R.raw.lecturesurdu);
+            }
+            else
+            mediaPlayer.release();
+            mediaPlayer.start();
+        }
+        else {
+            if (mediaPlayer==null){
+                mediaPlayer=MediaPlayer.create(getActivity(),R.raw.lecturespushto);
+            }
+            else
+                mediaPlayer.release();
+            mediaPlayer.start();
+        }
         NavController navController = Navigation.findNavController(view);
         ImageView backarrow = view.findViewById(R.id.backarrow);
 
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NavDirections action=lecturesDirections.actionLecturesToLearningMode(LanguageForLectures,SubjectsForLectures);
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.learningMode,true).build();
-                navController.navigate(R.id.action_lectures_to_learningMode,null,navOptions);
+                navController.navigate(action,navOptions);
+                mediaPlayer.release();
             }
         });
     }

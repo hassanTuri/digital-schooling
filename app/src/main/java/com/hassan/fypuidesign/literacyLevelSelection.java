@@ -1,11 +1,13 @@
 package com.hassan.fypuidesign;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
@@ -20,7 +22,8 @@ import android.widget.ImageView;
  * create an instance of this fragment.
  */
 public class literacyLevelSelection extends Fragment {
-
+    MediaPlayer mediaPlayer;
+    String LanguageSel;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -71,27 +74,92 @@ public class literacyLevelSelection extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        String LanguageSelect=literacyLevelSelectionArgs.fromBundle(getArguments()).getLanguageselection();
+        String LanguageBackFromSubjects=literacyLevelSelectionArgs.fromBundle(getArguments()).getLanguageselection();
         NavController navController= Navigation.findNavController(view);
         ImageView back_lang=view.findViewById(R.id.back_lang);
         ImageView semiliterate=view.findViewById(R.id.semiliterate);
         ImageView full_illiterate=view.findViewById(R.id.full_illiterate);
+        if(LanguageSelect!=null) {
+            LanguageSel = LanguageSelect;
+
+            if (LanguageSel == "PashtoL") {
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.illetracylevelselectionpushto);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                } else {
+                    mediaPlayer.release();
+                }
+            } else {
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.illiteracylevelselectionurdu);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                } else {
+                    mediaPlayer.release();
+                }
+
+            }
+        }
+        else {
+            LanguageSel=LanguageBackFromSubjects;
+            if (LanguageSel == "PashtoL") {
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.illetracylevelselectionpushto);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                } else {
+                    mediaPlayer.release();
+                }
+            } else {
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.illiteracylevelselectionurdu);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                } else {
+                    mediaPlayer.release();
+                }
+
+            }
+
+        }
+
         back_lang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.languageSelectionFragment,true).build();
                 navController.navigate(R.id.action_literacyLevelSelection_to_languageSelectionFragment,null,navOptions);
+                mediaPlayer.release();
             }
         });
         semiliterate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_literacyLevelSelection_to_subjects);
+                NavDirections action;
+                if(LanguageSel=="UrduL") {
+                    action = literacyLevelSelectionDirections.actionLiteracyLevelSelectionToSubjects("UrduL", "SemiIlliterate");
+                }
+                else{
+                    action = literacyLevelSelectionDirections.actionLiteracyLevelSelectionToSubjects("PashtoL", "SemiIlliterate");
+                }
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
         full_illiterate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_literacyLevelSelection_to_subjects);
+                NavDirections action;
+                if(LanguageSel=="UrduL") {
+                 action = literacyLevelSelectionDirections.actionLiteracyLevelSelectionToSubjects("UrduL", "FullyIlliterate");
+
+                }
+                else {
+                   action  = literacyLevelSelectionDirections.actionLiteracyLevelSelectionToSubjects("PashtoL", "FullyIlliterate");
+                }
+                navController.navigate(action);
+                mediaPlayer.release();
             }
         });
     }

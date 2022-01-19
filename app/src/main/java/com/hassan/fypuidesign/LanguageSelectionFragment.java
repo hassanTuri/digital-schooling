@@ -1,5 +1,4 @@
 package com.hassan.fypuidesign;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -10,21 +9,28 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
 import android.widget.ImageView;
-import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LanguageSelectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LanguageSelectionFragment extends Fragment{
+public class LanguageSelectionFragment extends Fragment implements Animation.AnimationListener {
 
     MediaPlayer mediaPlayer;
+    int countUr=1;
+    int CountP=0;
+    int countForLoop=0;
+    ImageView urduL;
+    ImageView pashto;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,11 +81,30 @@ public class LanguageSelectionFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         NavController navController = Navigation.findNavController(view);
-        ImageView urduL = view.findViewById(R.id.urduL);
-        ImageView pashto = view.findViewById(R.id.pushto);
+         urduL = view.findViewById(R.id.urduL);
+         pashto = view.findViewById(R.id.pushto);
+            animm(countUr,CountP);   // calling first time animm function
+//        final Handler handler=new Handler();
+//        Runnable runnable=new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                handler.postDelayed(this,1000);
+//            }
+//        };
+////        Runnable runnable1=new Runnable() {
+////            @Override
+////            public void run() {
+////                pashto.setAnimation(animation);
+////                handler.postDelayed(this,2000);
+////            }
+////        };
+////        handler.post(runnable1);
+//        handler.post(runnable);
         ImageView LanguageSelectionAudio=view.findViewById(R.id.languageselectionaudioimage);
-        LanguageSelectionAudio.setOnClickListener(new View.OnClickListener() {
+        LanguageSelectionAudio.setOnClickListener(new View.OnClickListener() { //audio icon
             @Override
             public void onClick(View view) {
                 if (mediaPlayer!=null){
@@ -126,6 +151,42 @@ public class LanguageSelectionFragment extends Fragment{
             }
         });
 
+
+    }
+    public void animm(int val1,int val2){
+        Animation animation= AnimationUtils.loadAnimation(getContext(),R.anim.scaleanimationforlanguage);
+        if (countUr==0 && CountP==0) {
+            animation.setAnimationListener(this);
+            urduL.setAnimation(animation);
+            countUr=1;
+            CountP=1;
+
+
+        }
+        else {
+            animation.setAnimationListener(this);
+            pashto.setAnimation(animation);
+            countUr=0;
+            CountP=0;
+
+        }
+    }
+    @Override
+    public void onAnimationStart(Animation animation){
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if (countForLoop==3) {
+            countForLoop=0;
+            return;
+        }
+        countForLoop+=1;
+        animm(countUr,CountP);
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
 
     }
 }

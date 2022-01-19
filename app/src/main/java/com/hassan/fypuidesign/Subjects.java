@@ -14,6 +14,8 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 /**
@@ -21,9 +23,13 @@ import android.widget.ImageView;
  * Use the {@link Subjects#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Subjects extends Fragment {
+public class Subjects extends Fragment implements Animation.AnimationListener {
         MediaPlayer mediaPlayer;
         String LanguageFromSubOrLit;
+    ImageView englishS ;
+    ImageView urduS ;
+    ImageView mathsS ;
+    int countForSubjeU=0, countForSubE=0,countForSubM=0,countForLoopSub=0;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,11 +83,12 @@ public class Subjects extends Fragment {
         String Illiteracy=SubjectsArgs.fromBundle(getArguments()).getLiteracyLevel();
         String LanguageBackFromLearningMode=SubjectsArgs.fromBundle(getArguments()).getLanguageSelectedSubject();
         NavController navController = Navigation.findNavController(view);
-        ImageView englishS = view.findViewById(R.id.englishS);
-        ImageView urduS = view.findViewById(R.id.urduS);
-        ImageView mathsS = view.findViewById(R.id.mathsS);
+         englishS = view.findViewById(R.id.englishS);
+         urduS = view.findViewById(R.id.urduS);
+         mathsS = view.findViewById(R.id.mathsS);
         ImageView back_language = view.findViewById(R.id.back_language);
         ImageView audioSubjectSelection = view.findViewById(R.id.audioSubjectSelection);
+        animma();
         if (LanguageSe!=null) {
             LanguageFromSubOrLit=LanguageSe;
             if (LanguageSe == "UrduL") {
@@ -90,12 +97,14 @@ public class Subjects extends Fragment {
                 else
                     mediaPlayer.release();
                 mediaPlayer.start();
+                mediaPlayer.setLooping(true);
             } else {
                 if (mediaPlayer == null)
                     mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionpushto);
                 else
                     mediaPlayer.release();
                 mediaPlayer.start();
+                mediaPlayer.setLooping(true);
             }
         }
         else {
@@ -106,12 +115,14 @@ public class Subjects extends Fragment {
                 else
                     mediaPlayer.release();
                 mediaPlayer.start();
+                mediaPlayer.setLooping(true);
             } else {
                 if (mediaPlayer == null)
                     mediaPlayer = MediaPlayer.create(getActivity(), R.raw.subjectselectionpushto);
                 else
                     mediaPlayer.release();
                 mediaPlayer.start();
+                mediaPlayer.setLooping(true);
             }
 
         }
@@ -172,5 +183,43 @@ public class Subjects extends Fragment {
                 mediaPlayer.release();
             }
         });
+    }
+        public void animma(){
+        Animation animation= AnimationUtils.loadAnimation(getContext(),R.anim.scaleanimationforliteracyselection);
+        if (countForSubM==0 && countForSubjeU==0 && countForSubE==0){
+            animation.setAnimationListener(this);
+            englishS.setAnimation(animation);
+            countForSubE=1;
+        }
+        else if (countForSubM==0 && countForSubjeU==0 && countForSubE==1){
+            animation.setAnimationListener(this);
+            urduS.setAnimation(animation);
+            countForSubjeU=1;
+            countForSubE=0;
+        }
+        else {
+            animation.setAnimationListener(this);
+            mathsS.setAnimation(animation);
+            countForSubjeU=0;
+        }
+        }
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if (countForLoopSub==5) {
+            countForLoopSub=0;
+            return;
+        }
+        countForLoopSub+=1;
+        animma();
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }

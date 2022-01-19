@@ -34,6 +34,7 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView5">
 
@@ -43,20 +44,24 @@
                 android:layout_height="153dp"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_marginTop="35dp"
-                android:padding="20dp"
-                android:background="@drawable/border"
                 android:layout_marginBottom="50dp"
+                android:background="@drawable/border"
+                android:elevation="25dp"
+                android:padding="20dp"
                 android:src="@drawable/iconp"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+
+                />
 
             <ImageView
                 android:id="@+id/urduL"
                 android:layout_width="241dp"
                 android:layout_height="153dp"
-                android:background="@drawable/border"
-                android:padding="15dp"
                 android:layout_gravity="center|center_horizontal|center_vertical"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/border"
+                android:elevation="25dp"
+                android:padding="15dp"
                 android:src="@drawable/iconu" />
 
             <ImageView

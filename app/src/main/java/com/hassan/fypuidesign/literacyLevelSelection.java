@@ -14,6 +14,8 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 /**
@@ -21,9 +23,14 @@ import android.widget.ImageView;
  * Use the {@link literacyLevelSelection#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class literacyLevelSelection extends Fragment {
+public class literacyLevelSelection extends Fragment implements Animation.AnimationListener {
     MediaPlayer mediaPlayer;
     String LanguageSel;
+    int fullIlliterate=0;
+    int semiIlliterate=0;
+    int countForLoopLiteracy=0;
+    ImageView semiliterate;
+    ImageView full_illiterate;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -78,9 +85,10 @@ public class literacyLevelSelection extends Fragment {
         String LanguageBackFromSubjects=literacyLevelSelectionArgs.fromBundle(getArguments()).getLanguageselection();
         NavController navController= Navigation.findNavController(view);
         ImageView back_lang=view.findViewById(R.id.back_lang);
-        ImageView semiliterate=view.findViewById(R.id.semiliterate);
-        ImageView full_illiterate=view.findViewById(R.id.full_illiterate);
+        semiliterate=view.findViewById(R.id.semiliterate);
+        full_illiterate=view.findViewById(R.id.full_illiterate);
         ImageView audioLiteracyLevel=view.findViewById(R.id.audioLiteracyLevel);
+        animmi();
         if(LanguageSelect!=null) {
             LanguageSel = LanguageSelect;
 
@@ -125,6 +133,7 @@ public class literacyLevelSelection extends Fragment {
             }
 
         }
+
         audioLiteracyLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,5 +192,43 @@ public class literacyLevelSelection extends Fragment {
                 mediaPlayer.release();
             }
         });
+    }
+
+    public void animmi(){
+        Animation animation= AnimationUtils.loadAnimation(getContext(),R.anim.scaleanimationforliteracyselection);
+        if (semiIlliterate==0 && fullIlliterate==0) {
+            animation.setAnimationListener(this);
+            full_illiterate.setAnimation(animation);
+            fullIlliterate=1;
+            semiIlliterate=1;
+
+
+        }
+        else {
+            animation.setAnimationListener(this);
+           semiliterate.setAnimation(animation);
+            semiIlliterate=0;
+            fullIlliterate=0;
+
+        }
+    }
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if (countForLoopLiteracy==3) {
+            countForLoopLiteracy=0;
+            return;
+        }
+        countForLoopLiteracy+=1;
+        animmi();
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }

@@ -14,6 +14,8 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 /**
@@ -21,8 +23,11 @@ import android.widget.ImageView;
  * Use the {@link LearningMode#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LearningMode extends Fragment {
+public class LearningMode extends Fragment implements Animation.AnimationListener {
         MediaPlayer mediaPlayer;
+        int countForLoopLearning=0,countForWriting=0,countForReading=0;
+    ImageView writing ;
+    ImageView reading ;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,13 +79,14 @@ public class LearningMode extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         String LanguageForLearningMode=LearningModeArgs.fromBundle(getArguments()).getLanguageForLearningMode();
         String Subjects=LearningModeArgs.fromBundle(getArguments()).getSubjectChoosen();
-       // String LanguageBackLect=LearningModeArgs.fromBundle(getArguments()).getLanguageForLearningMode();
+        String LanguageBackLect=LearningModeArgs.fromBundle(getArguments()).getLanguageForLearningMode();
         if (LanguageForLearningMode=="UrduL"){
             if (mediaPlayer==null)
             mediaPlayer=MediaPlayer.create(getActivity(),R.raw.subjectsmodulesurdu);
             else
                 mediaPlayer.release();
             mediaPlayer.start();
+            mediaPlayer.setLooping(true);
         }
         else {
             if (mediaPlayer==null)
@@ -88,11 +94,12 @@ public class LearningMode extends Fragment {
             else
                 mediaPlayer.release();
             mediaPlayer.start();
+            mediaPlayer.setLooping(true);
         }
-
         NavController navController = Navigation.findNavController(view);
-        ImageView writing = view.findViewById(R.id.writing);
-        ImageView reading = view.findViewById(R.id.reading);
+         writing = view.findViewById(R.id.writing);
+         reading = view.findViewById(R.id.reading);
+         animmat();
         ImageView back_subjects = view.findViewById(R.id.back_subjects);
         ImageView audioForLearningMode = view.findViewById(R.id.speakerVoice);
 
@@ -142,5 +149,43 @@ public class LearningMode extends Fragment {
                 mediaPlayer.release();
             }
         });
+    }
+    public void animmat(){
+        Animation animation= AnimationUtils.loadAnimation(getContext(),R.anim.scaleforsubjectlearningmode);
+        if (countForReading==0 && countForWriting==0) {
+            animation.setAnimationListener(this);
+            writing.setAnimation(animation);
+            countForReading=1;
+            countForWriting=1;
+
+
+        }
+        else {
+            animation.setAnimationListener(this);
+            reading.setAnimation(animation);
+            countForWriting=0;
+            countForReading=0;
+
+        }
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if (countForLoopLearning==3) {
+            countForLoopLearning=0;
+            return;
+        }
+        countForLoopLearning+=1;
+        animmat();
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }

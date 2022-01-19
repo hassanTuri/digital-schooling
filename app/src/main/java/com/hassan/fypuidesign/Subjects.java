@@ -123,6 +123,7 @@ public class Subjects extends Fragment implements Animation.AnimationListener {
                     mediaPlayer.release();
                 mediaPlayer.start();
                 mediaPlayer.setLooping(true);
+
             }
 
         }
